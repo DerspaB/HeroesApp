@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { heroes } from '../../data/heroes'
+import React, { useMemo, useState } from 'react'
 import HeroCard from '../heroes/HeroCard';
 import queryString from 'query-string'
+import { gerHeroesByName } from '../../selectors/getHeroesByName';
 
 export const SearchScreen = ( { history, location} ) => {
 
@@ -20,8 +20,8 @@ export const SearchScreen = ( { history, location} ) => {
         });
     }
     const {valorBusqueda} = busqueda;
-    
-    const heroesFiltered = heroes;
+
+    const heroesFiltered = useMemo(() => gerHeroesByName(q), [q] )
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -64,6 +64,22 @@ export const SearchScreen = ( { history, location} ) => {
                 <div className="col-12 mt-5" align="center">
                     <h4>Results</h4>
                     <hr />
+
+                    {
+                        (q === '')
+                            &&
+                            <div className="alert alert-info">
+                                There is no a hero
+                            </div>
+                    }
+                    
+                    {
+                        (q !== '' && heroesFiltered.length === 0)
+                            &&
+                            <div className="alert alert-danger">
+                                There is no a hero with <strong>{ q }</strong>
+                            </div>
+                    }
 
                     {
                         heroesFiltered.map( heroe => (
