@@ -5,7 +5,7 @@ import { gerHeroesByName } from '../../selectors/getHeroesByName';
 
 export const SearchScreen = ( { history, location} ) => {
 
-    const {q = ''} =queryString.parse(location.search);
+    const {q = 'cualquier cosa'} =queryString.parse(location.search);
 
     
     const [busqueda, setbusqueda] = useState({
