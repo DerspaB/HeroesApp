@@ -9,4 +9,6 @@ export const gerHeroesByName = ( name = '') => {
     name.toLowerCase();
     return heroes.filter( heroe => heroe.superhero.toLowerCase().includes(name));
 
+
 }
+
